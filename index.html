@@ -40,7 +40,9 @@
         </div>
         <h1 class="text-3xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">GameToZone</h1>
         <p class="text-slate-400 mb-8 text-center">Play, Watch & Earn Real Cash!</p>
-        <button onclick="initAuth()" class="w-full max-w-xs bg-indigo-600 hover:bg-indigo-700 py-3 rounded-xl font-bold text-lg shadow-lg">Start Earning</button>
+        <button type="button" onclick="initAuth()" class="w-full max-w-xs bg-indigo-600 hover:bg-indigo-700 py-3 rounded-xl font-bold text-lg shadow-lg cursor-pointer">
+    Start Earning
+</button>
         <p class="text-xs text-slate-500 mt-4">Connecting...</p>
     </div>
 
@@ -201,14 +203,22 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 const appId = "gametozone-8f5d8";
-    <
 
         let currentUser = null, userData = null, gameTimerInterval = null, secondsPlayed = 0;
         let lastAdWatchTime = 0; // For Cooldown
 
         let SETTINGS = { gameDuration: 60, gameReward: 50, referBonus: 500, watchAdReward: 50, watchAdDelay: 15, coinValue: "₹1", socials: {}, paymentMethods: ['Paytm','UPI'] };
 
-        async function initAuth() { try { await auth.signInAnonymously(); } catch(e) { fallbackMode(); } }
+        async function initAuth() {
+    try {
+        showToast("Connecting...", "success");
+        await auth.signInAnonymously();
+    } catch (e) {
+        console.log(e);
+        showToast("Login failed", "error");
+        fallbackMode();
+    }
+}
 
         auth.onAuthStateChanged(async (u) => {
             if (u) {
