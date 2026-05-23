@@ -319,10 +319,6 @@
                     <h2 id="profile-name" class="text-2xl font-bold text-white">User Name</h2>
                     <p id="profile-email" class="text-sm text-gray-400 mt-1">user@email.com</p>
                     
-                    <div class="w-full mt-8 pt-6 border-t border-white/10 z-10">
-                        <button id="logout-btn" class="w-full py-3.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 font-bold flex items-center justify-center gap-2 transition">
-                            <i data-lucide="log-out" class="w-5 h-5"></i> Secure Log Out
-                        </button>
                     </div>
                 </div>
             </div>
@@ -461,10 +457,10 @@
                 const data = snap.exists() ? snap.data() : {};
                 // Admin controlled settings with default fallbacks
                 appConfig = {
-                    minWithdrawal: data.minWithdrawal || 2000, 
+                    minWithdrawal: data.minWithdrawal || 4000, 
                     paymentMethods: data.paymentMethods || ["USDT", "TON"], 
                     coinValueCoins: data.coinValueCoins || 2000, 
-                    coinValueInr: data.coinValueInr || 1,
+                    coinValueUsd: data.coinValueUsd || 1,
                     
                     // Controlled by Admin (COOLDOWNS IN SECONDS)
                     dailyAdLimit: data.dailyAdLimit || 10,
