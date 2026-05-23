@@ -762,7 +762,23 @@
             document.querySelectorAll('.nav-link').forEach(l => { l.addEventListener('click', (e) => { e.preventDefault(); if (l.dataset.page === 'wallet-page') loadWithdrawalHistory(); navigateTo(l.dataset.page); }); });
             document.getElementById('notification-bell').addEventListener('click', () => { navigateTo('notifications-page'); loadNotifications(); });
             document.getElementById('copy-code-btn').addEventListener('click', () => { const txt = document.getElementById('referral-code').textContent; if (navigator.clipboard) { navigator.clipboard.writeText(txt).then(() => showAlert("Copied!")); } else { const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showAlert("Copied!"); } });
-            document.getElementById('share-btn').addEventListener('click', () => { const txt = `Join Multi Game World & get ${appConfig.referralBonus} Coins! Code: ${userData.referralCode}`; if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) { window.Telegram.WebApp.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(txt)}`); } else if (navigator.share) { navigator.share({ title: 'Multi Game World!', text: txt, url: window.location.href }); } });
+            document.getElementById('share-btn').addEventListener('click', () => {
+    const botLink = 'https://t.me/multigameworld_bot';
+
+    const txt = `🎮 Join Multi Game World & get ${appConfig.referralBonus} Coins!\n\n🎁 Referral Code: ${userData.referralCode}`;
+
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
+        window.Telegram.WebApp.openTelegramLink(
+            `https://t.me/share/url?url=${encodeURIComponent(botLink)}&text=${encodeURIComponent(txt)}`
+        );
+    } else if (navigator.share) {
+        navigator.share({
+            title: 'Multi Game World',
+            text: txt,
+            url: botLink
+        });
+    }
+});
             document.getElementById('apply-referral-btn').addEventListener('click', handleApplyReferralCode);
             document.getElementById('withdraw-btn').addEventListener('click', async () => {
                 const a = parseInt(document.getElementById('withdraw-amount').value), m = document.getElementById('withdraw-method').value, inp = document.getElementById('payment-detail-input'); const det = inp ? inp.value.trim() : ''; const min = appConfig.minWithdrawal || 4000;
