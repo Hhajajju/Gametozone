@@ -457,7 +457,7 @@
                 const data = snap.exists() ? snap.data() : {};
                 // Admin controlled settings with default fallbacks
                 appConfig = {
-                    minWithdrawal: data.minWithdrawal || 1000, 
+                    minWithdrawal: data.minWithdrawal || 4000, 
                     paymentMethods: data.paymentMethods || ["USDT", "TON"], 
                     coinValueCoins: data.coinValueCoins || 2000, 
                     coinValueUsd: data.coinValueUsd || 1,
@@ -781,7 +781,7 @@
 });
             document.getElementById('apply-referral-btn').addEventListener('click', handleApplyReferralCode);
             document.getElementById('withdraw-btn').addEventListener('click', async () => {
-                const a = parseInt(document.getElementById('withdraw-amount').value), m = document.getElementById('withdraw-method').value, inp = document.getElementById('payment-detail-input'); const det = inp ? inp.value.trim() : ''; const min = appConfig.minWithdrawal || 1000;
+                const a = parseInt(document.getElementById('withdraw-amount').value), m = document.getElementById('withdraw-method').value, inp = document.getElementById('payment-detail-input'); const det = inp ? inp.value.trim() : ''; const min = appConfig.minWithdrawal || 4000;
                 if (!a || a <= 0) return showAlert("Invalid amount."); if (a < min) return showAlert(`Minimum withdrawal is ${min} coins.`); if (a > userData.balance) return showAlert("Insufficient balance."); if (!det) return showAlert("Enter payment details.");
                 loader.style.display = 'flex';
                 try { await updateBalance(-a); await addDoc(collection(db, "withdrawals"), { userId: currentUser.uid, userName: userData.name, userEmail: userData.email, amount: a, method: m, paymentDetail: det, status: "pending", requestedAt: serverTimestamp() }); showAlert("Request submitted successfully!"); document.getElementById('withdraw-amount').value = ''; if(inp) inp.value = ''; } catch (err) { showAlert("Error: " + err.message); await updateBalance(a); } loader.style.display = 'none';
