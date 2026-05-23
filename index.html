@@ -457,7 +457,7 @@
                 const data = snap.exists() ? snap.data() : {};
                 // Admin controlled settings with default fallbacks
                 appConfig = {
-                    minWithdrawal: data.minWithdrawal || 4000, 
+                    minWithdrawal: data.minWithdrawal || 1000, 
                     paymentMethods: data.paymentMethods || ["USDT", "TON"], 
                     coinValueCoins: data.coinValueCoins || 2000, 
                     coinValueUsd: data.coinValueUsd || 1,
